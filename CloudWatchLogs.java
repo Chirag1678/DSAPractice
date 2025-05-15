@@ -10,7 +10,9 @@ public class CloudWatchLogs {
 
         List<List<String>> result = new CloudWatchLogs().extractErrorLogs(logs);
 
-        System.out.println(Arrays.deepToString(result.toArray()));
+        for(List<String> log : result) {
+            System.out.println(log);
+        }
     }
 
     public List<List<String>> extractErrorLogs(List<List<String>> logs) {
