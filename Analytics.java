@@ -69,23 +69,42 @@ public class Analytics {
     }
 
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+//        System.out.print("Enter total number of requests and size: ");
+        int requests = sc.nextInt();
+        int k = sc.nextInt();
+        sc.nextLine();
+
         AnalyticsStore analyticsStore = new AnalyticsStore();
-        Analytics analytics = new Analytics(analyticsStore, 3);
+        Analytics analytics = new Analytics(analyticsStore, k);
 
-        analytics.registerAction(ActionEnum.feature1Button);
-        analytics.registerAction(ActionEnum.feature1Button);
+        while(requests-->0) {
+//            System.out.print("Enter action: ");
+            String action = sc.next();
 
-        System.out.println(analytics.getTotalNumberOfLoggedActions());
+            switch (action) {
+                case "registerAction" -> {
+                    String actionType = sc.next();
+                    ActionEnum actionEnum = ActionEnum.valueOf(actionType);
+                    analytics.registerAction(actionEnum);
+                }
 
-        analytics.registerAction(ActionEnum.feature2Button);
-        analytics.registerAction(ActionEnum.feature3Button);
+                case "getTotalNumberOfLoggedActions" -> {
+                    System.out.println(analytics.getTotalNumberOfLoggedActions());
+                }
 
-        System.out.println(analytics.getNumberOfActionRegisteredButNotSentToAnalyticsStore());
+                case "getNumberOfActionRegisteredButNotSentToAnalyticsStore" -> {
+                        System.out.println(analytics.getNumberOfActionRegisteredButNotSentToAnalyticsStore());
+                }
 
-        analytics.registerAction(ActionEnum.feature2Button);
+                case "getMostFrequentlyUsedActions" -> {
+                    List<ActionEnum> mostFrequentActions = analytics.getMostFrequentlyUsedActions();
+                    System.out.println(mostFrequentActions);
+                }
+            }
+        }
 
-        System.out.println(analytics.getMostFrequentlyUsedActions());
-
-        System.out.print(analyticsStore.getActions());
+        System.out.println(analyticsStore.getActions());
     }
 }
