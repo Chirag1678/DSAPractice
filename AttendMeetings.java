@@ -1,4 +1,4 @@
-import java.util.PriorityQueue;
+import java.util.Arrays;
 
 public class AttendMeetings {
     public static void main(String[] args) {
@@ -10,17 +10,13 @@ public class AttendMeetings {
     }
 
     public static boolean canAttendMeetings(int[][] intervals) {
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        for (int[] interval : intervals) {
-            pq.offer(interval);
-        }
-        int[] prev = pq.poll();
-        while (!pq.isEmpty()) {
-            int[] curr = pq.poll();
-            if (curr[0] < prev[1]) {
+        if(intervals == null || intervals.length == 0) return true;
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+
+        for(int i = 1; i < intervals.length; i++) {
+            if(intervals[i][0] < intervals[i - 1][1]) {
                 return false;
             }
-            prev = curr;
         }
         return true;
     }
